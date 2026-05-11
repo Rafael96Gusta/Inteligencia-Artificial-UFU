@@ -1,9 +1,4 @@
-````markdown
-# ReadWise AI – Projeto Alpha de Inteligência Artificial Acadêmica
-
-<p align="center">  
-  <img src="docs/logo.png" alt="ReadWise AI Logo" width="200"/>  
-</p>
+# ReadWise AI
 
 ##  Visão Geral
 
