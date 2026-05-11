@@ -90,8 +90,8 @@ O sistema tem foco em facilitar a leitura ativa, mapear ideias centrais e organi
 
 ## Contribuidores
 
-* **Rafael Gustavo Nogueira** — Graduando de Relações Internacionais da Universidade Federal de Uberlândia, idealizador e Dev jr (12511RIT027)
-* **@LRV Web** — parceria no desenvolvimento do projeto final / infraestrutura
+* **Rafael Gustavo Nogueira** — Graduando de Inteligencia Artificial da Universidade Federal de Uberlândia, idealizador e Dev jr
+* **@LRV Web** — Parceria no desenvolvimento do projeto final/infraestrutura
 
 Se você quiser ajudar com código, testes, documentação ou expansão de funcionalidade, contribuições são bem-vindas.
 
@@ -99,4 +99,4 @@ Se você quiser ajudar com código, testes, documentação ou expansão de funci
 
 ## Licença:
 
-Todos os direitos reservados - LRV Web e Rafael Gustavo Nogueira
+Todos os direitos reservados - LRV Web
