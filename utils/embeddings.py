@@ -5,7 +5,7 @@ import asyncio
 
 client = OpenAI()
 
-# Memória
+# Memória simples em runtime
 stored_texts: list[str] = []
 stored_embeddings: list[list[float]] = []
 
@@ -35,7 +35,7 @@ async def index_texts(texts: list[str]):
         print(f"✅ Indexação concluída com sucesso ({len(stored_embeddings)} embeddings gerados).")
 
     except Exception as e:
-        print("Erro durante indexação:")
+        print("❌ Erro durante indexação:")
         traceback.print_exc()
         raise RuntimeError(f"Erro ao gerar embeddings: {e}")
 
@@ -65,10 +65,10 @@ async def search_similar(query: str, top_k: int = 5):
         top_indices = np.argsort(similarities)[::-1][:top_k]
         results = [stored_texts[i] for i in top_indices]
 
-        print(f"Retornando {len(results)} resultados mais semelhantes.")
+        print(f"✅ Retornando {len(results)} resultados mais semelhantes.")
         return results
 
     except Exception as e:
-        print("Erro na busca semântica:")
+        print("❌ Erro na busca semântica:")
         traceback.print_exc()
         return [f"Erro ao processar busca: {e}"]

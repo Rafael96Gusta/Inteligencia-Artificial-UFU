@@ -3,8 +3,44 @@ const messagesDiv = document.getElementById("messages");
 const userInput = document.getElementById("userInput");
 const fileInput = document.getElementById("fileInput");
 const sendBtn = document.getElementById("sendBtn");
+const academicAreaInput = document.getElementById("academicArea");
+const exactSciencesInput = document.getElementById("exactSciences");
 
 const historyBtn = document.getElementById("historyBtn");
+
+const ACADEMIC_AREA_KEY = "rw_academic_area_v1";
+const EXACT_SCIENCES_KEY = "rw_exact_sciences_v1";
+
+function getExactSciencesFlag() {
+  return exactSciencesInput && exactSciencesInput.checked ? "true" : "false";
+}
+
+function loadExactSciences() {
+  if (!exactSciencesInput) return;
+  exactSciencesInput.checked = localStorage.getItem(EXACT_SCIENCES_KEY) === "1";
+}
+
+function persistExactSciences() {
+  if (!exactSciencesInput) return;
+  localStorage.setItem(EXACT_SCIENCES_KEY, exactSciencesInput.checked ? "1" : "0");
+}
+
+function getAcademicArea() {
+  return (academicAreaInput && academicAreaInput.value.trim()) || "";
+}
+
+function loadAcademicArea() {
+  if (!academicAreaInput) return;
+  const saved = localStorage.getItem(ACADEMIC_AREA_KEY);
+  if (saved) academicAreaInput.value = saved;
+}
+
+function persistAcademicArea() {
+  if (!academicAreaInput) return;
+  const v = academicAreaInput.value.trim();
+  if (v) localStorage.setItem(ACADEMIC_AREA_KEY, v);
+  else localStorage.removeItem(ACADEMIC_AREA_KEY);
+}
 
 const chatStatus = document.getElementById("chatStatus");
 const apiPill = document.getElementById("apiPill");
@@ -113,8 +149,12 @@ if (themeSwitcher) {
 }
 
 sendBtn.onclick = async () => {
+  persistAcademicArea();
+  persistExactSciences();
   const text = userInput.value.trim();
   const file = fileInput.files[0];
+  const academic_area = getAcademicArea();
+  const exact_sciences = getExactSciencesFlag();
 
   if (!text && !file) return alert("Envie um texto ou selecione um PDF!");
 
@@ -126,7 +166,7 @@ sendBtn.onclick = async () => {
     addMessage("ai", " Processando sua solicitação...");
     const res = await fetch(`${API_BASE}/chat/`, {
       method: "POST",
-      body: new URLSearchParams({ query: text }),
+      body: new URLSearchParams({ query: text, academic_area, exact_sciences }),
     });
     const data = await res.json();
 
@@ -141,6 +181,8 @@ sendBtn.onclick = async () => {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("academic_area", academic_area);
+    formData.append("exact_sciences", exact_sciences);
 
     addMessage("ai", " Analisando PDF...");
     const res = await fetch(`${API_BASE}/upload/`, {
@@ -158,3 +200,12 @@ sendBtn.onclick = async () => {
 
 apiPill.textContent = API_BASE.replace("http://", "");
 loadTheme();
+loadAcademicArea();
+loadExactSciences();
+if (academicAreaInput) {
+  academicAreaInput.addEventListener("change", persistAcademicArea);
+  academicAreaInput.addEventListener("blur", persistAcademicArea);
+}
+if (exactSciencesInput) {
+  exactSciencesInput.addEventListener("change", persistExactSciences);
+}
